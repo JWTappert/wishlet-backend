@@ -10,11 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_04_040757) do
+ActiveRecord::Schema.define(version: 2022_02_06_233339) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "link"
+    t.uuid "wishlist_id", null: false
+    t.string "photo"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["wishlist_id"], name: "index_items_on_wishlist_id"
+  end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
@@ -34,4 +45,5 @@ ActiveRecord::Schema.define(version: 2022_02_04_040757) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "items", "wishlists"
 end

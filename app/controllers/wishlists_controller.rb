@@ -28,6 +28,7 @@ class WishlistsController < ApplicationController
     wishlist = Wishlist.find(params[:id])
     if wishlist.present?
       wishlist.destroy
+      render json: { success: true }, status: :no_content
     else
       record_not_found
     end

@@ -1,3 +1,5 @@
 Rails.application.routes.draw do
-  resources :wishlists
+  resources :wishlists do
+    resources :items
+  end
 end
